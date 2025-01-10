@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/image-recognition/index",
+    "pages/ai-chat/index"
+  ],
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#007aff",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/image-recognition/index",
+        "iconPath": "static/icons/image.png",
+        "selectedIconPath": "static/icons/image-selected.png",
+        "text": "图片识别"
+      },
+      {
+        "pagePath": "pages/ai-chat/index",
+        "iconPath": "static/icons/chat.png",
+        "selectedIconPath": "static/icons/chat-selected.png",
+        "text": "AI 对话"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

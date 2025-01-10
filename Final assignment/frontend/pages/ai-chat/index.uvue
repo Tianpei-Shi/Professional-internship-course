@@ -1,0 +1,180 @@
+<template>
+  <view class="chat-container">
+    <!-- 顶部导航栏 -->
+    <view class="header">
+      <text class="header-title">ChatGPT</text>
+    </view>
+
+    <!-- 聊天记录区域 -->
+    <scroll-view class="chat-area" scroll-y>
+      <view v-for="(message, index) in chatMessages" :key="index" class="message-item">
+        <view :class="['message-bubble', message.type]">
+          <text>{{ message.text }}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 底部输入框 -->
+    <view class="input-area">
+      <input
+        type="text"
+        v-model="userInput"
+        class="input-box"
+        placeholder="输入消息"
+        maxlength="200"
+        confirm-type="send"
+        @confirm="sendMessage"
+      />
+      <button class="send-button" @click="sendMessage">发送</button>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      userInput: '', // 用户输入内容
+      chatMessages: [
+        { text: '你好！有什么我可以帮助你的吗？', type: 'ai' }, // 默认消息
+      ] // 聊天记录
+    };
+  },
+  methods: {
+    async sendMessage() {
+      if (!this.userInput.trim()) {
+        uni.showToast({ title: '请输入内容', icon: 'none' });
+        return;
+      }
+
+      // 添加用户消息到聊天记录
+      this.chatMessages.push({ text: this.userInput, type: 'user' });
+
+      const currentInput = this.userInput; // 保存用户输入内容
+      this.userInput = ''; // 清空输入框
+
+      // 显示加载提示
+      uni.showLoading({ title: 'AI处理中...' });
+
+      try {
+        // 调用后端 API
+        const res = await uni.request({
+          url: 'http://localhost:8080/chat', // 后端 API 地址
+          method: 'POST',
+          data: { userInput: currentInput },
+          header: { 'Content-Type': 'application/json' },
+        });
+
+        // 获取 AI 返回的结果
+        const response = res.data.response || '未返回结果';
+        this.chatMessages.push({ text: response, type: 'ai' });
+      } catch (err) {
+        // 显示错误消息
+        this.chatMessages.push({ text: '发送失败，请重试', type: 'error' });
+      } finally {
+        uni.hideLoading();
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* 容器 */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 顶部导航栏 */
+.header {
+  height: 50px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* 聊天记录区域 */
+.chat-area {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.message-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  word-wrap: break-word;
+}
+
+.message-bubble.user {
+  background-color: #007aff;
+  color: #ffffff;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.message-bubble.ai {
+  background-color: #e5e5ea;
+  color: #000000;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.message-bubble.error {
+  background-color: #ffcccc;
+  color: #000000;
+  align-self: flex-start;
+  text-align: left;
+}
+
+/* 底部输入框 */
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.input-box {
+  flex: 1;
+  height: 40px;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 10px;
+  background-color: #f9f9f9;
+}
+
+.send-button {
+  width: 60px;
+  height: 40px;
+  background-color: #007aff;
+  color: #ffffff;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 40px;
+}
+</style>

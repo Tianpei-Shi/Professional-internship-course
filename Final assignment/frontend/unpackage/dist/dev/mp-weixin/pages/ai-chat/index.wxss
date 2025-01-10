@@ -1,0 +1,92 @@
+@import "../../uvue.wxss";
+:host{display:flex;flex-direction:column}
+
+/* 容器 */
+.chat-container.data-v-627fd07b {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 顶部导航栏 */
+.header.data-v-627fd07b {
+  height: 50px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.header-title.data-v-627fd07b {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* 聊天记录区域 */
+.chat-area.data-v-627fd07b {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+.message-item.data-v-627fd07b {
+  display: flex;
+  margin-bottom: 10px;
+}
+.message-bubble.data-v-627fd07b {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  word-wrap: break-word;
+}
+.message-bubble.user.data-v-627fd07b {
+  background-color: #007aff;
+  color: #ffffff;
+  align-self: flex-end;
+  text-align: right;
+}
+.message-bubble.ai.data-v-627fd07b {
+  background-color: #e5e5ea;
+  color: #000000;
+  align-self: flex-start;
+  text-align: left;
+}
+.message-bubble.error.data-v-627fd07b {
+  background-color: #ffcccc;
+  color: #000000;
+  align-self: flex-start;
+  text-align: left;
+}
+
+/* 底部输入框 */
+.input-area.data-v-627fd07b {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+.input-box.data-v-627fd07b {
+  flex: 1;
+  height: 40px;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 10px;
+  background-color: #f9f9f9;
+}
+.send-button.data-v-627fd07b {
+  width: 60px;
+  height: 40px;
+  background-color: #007aff;
+  color: #ffffff;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 40px;
+}
